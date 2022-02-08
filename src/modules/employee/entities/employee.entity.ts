@@ -6,6 +6,8 @@ import {
   IsString,
 } from 'class-validator';
 import { AttendanceType } from 'src/enums/attendanceType.enum';
+import { UserStatusEnum } from 'src/enums/userStatus.enum';
+import { File } from 'src/modules/file/entities/file.entity';
 import { User } from 'src/modules/users/entities/user.entity';
 import {
   Column,
@@ -55,5 +57,33 @@ export class Employee {
   @JoinColumn()
   authUser: User;
 
+  @OneToOne(() => File, { lazy: true })
+  @JoinColumn()
+  avatar: File;
+
+
+
+  static   createInitialDataObject = (empData: Object) => {
+    // #TODO: change the status enum 
+    var initialData = {};
+    if (Object.keys(empData).length > 0) {
+      initialData = {
+        'Employee No': empData['emp_No'],
+        Name: empData['emP_Name'],
+        Position: empData['position_Name'],
+        Department: empData['department_Name'],
+        Branch: empData['location_Name'],
+        Role: empData['role'] || '',
+        'Mac Address': empData['Mac_Address'] || 'NA',
+        'Location Type': empData['location_Type'] || '',
+        'Assigned Location': empData['assigned_Location'] || '',
+        HOD: empData['HOD'] || '',
+        'Early Check-In Allowed': empData['early_Check_In_Allowed'] || '',
+        Status: UserStatusEnum.ACTIVE,
+        lastWorkingDate: empData['lastWorkingDate'],
+      };
+    }
+    return initialData;
+  };
  
 }

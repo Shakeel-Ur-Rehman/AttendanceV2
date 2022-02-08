@@ -8,6 +8,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { AuthModule } from '../auth/auth.module';
 import { AdminModule } from '../admin/admin.module';
 import { EmployeeModule } from '../employee/employee.module';
+import { VersionManagerModule } from '../version-manager/version-manager.module';
+import { FileModule } from '../file/file.module';
 
 
 @Module({
@@ -18,7 +20,9 @@ import { EmployeeModule } from '../employee/employee.module';
     }),
     AuthModule,
     AdminModule,
-    EmployeeModule
+    EmployeeModule,
+    VersionManagerModule,
+    FileModule
   ],
   controllers: [AppController],
   providers: [

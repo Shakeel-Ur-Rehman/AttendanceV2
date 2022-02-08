@@ -1,26 +1,68 @@
-import { Injectable } from '@nestjs/common';
-import { CreateEmployeeDto } from './dto/create-employee.dto';
-import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserRolesEnum } from 'src/enums/userRole.enum';
+import { UserStatusEnum } from 'src/enums/userStatus.enum';
+import { Repository } from 'typeorm';
+import { UsersService } from '../users/users.service';
+import { Employee } from './entities/employee.entity';
 
 @Injectable()
 export class EmployeeService {
-  create(createEmployeeDto: CreateEmployeeDto) {
-    return 'This action adds a new employee';
+  constructor(
+    @InjectRepository(Employee)
+    private readonly employeeRepo:Repository<Employee>,
+    private userService:UsersService
+  ){}
+
+  create = async (data): Promise<Employee> => {
+    data.authUser.type = UserRolesEnum.EMPLOYEE;
+    data.authUser.status = UserStatusEnum.INACTIVE;
+    const authUser = await this.userService.create(data.authUser);
+    const employee = await this.employeeRepo.save({
+      authUser,
+    });
+    return employee;
+  };
+
+  findOne(id: number):Promise<Employee>{
+      return this.employeeRepo.findOne(id); 
   }
 
-  findAll() {
-    return `This action returns all employee`;
+  async getEmployeeByBatchNo(batchNo){
+    const employee = await this.employeeRepo.createQueryBuilder("employee")
+                    .leftJoin("authUser","user")
+                    .where("user.username =:username",{username:batchNo})
+                    .getOne()
+    return employee
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} employee`;
+  async findMultipleById(data: number[]): Promise<Employee[]> {
+    return await this.employeeRepo
+      .createQueryBuilder('employee')
+      .where('id in (:...ids)', { ids: data })
+      .getMany();
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    return `This action updates a #${id} employee`;
+  async findByUserId(user_id):Promise<Employee>{
+    try{
+      const employee =  await this.employeeRepo.findOne({where:{
+        authUserId:user_id
+      }})
+      await employee.avatar
+      return employee
+    }
+    catch(error){
+      throw new HttpException("Employee details not found",HttpStatus.NOT_FOUND)
+    }
+  }  
+
+  async searchEmployees(query){
+    const employees = await this.employeeRepo
+    .createQueryBuilder('employee')
+    .leftJoinAndSelect('employee.authUser', 'user')
+    .where('user.username like :username', { username:`${query.query}%`})
+    .getMany();
+  return employees
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} employee`;
-  }
 }

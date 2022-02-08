@@ -1,4 +1,7 @@
 export const enum UserRolesEnum {
-User="user"
+    ADMIN = 'admin',
+    EMPLOYEE = 'employee',
+    MANAGER = 'manager',
+    SUPERVISOR = 'supervisor',
 }
   
