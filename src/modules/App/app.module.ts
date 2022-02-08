@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_GUARD } from '@nestjs/core';
@@ -10,6 +10,8 @@ import { AdminModule } from '../admin/admin.module';
 import { EmployeeModule } from '../employee/employee.module';
 import { VersionManagerModule } from '../version-manager/version-manager.module';
 import { FileModule } from '../file/file.module';
+import { LocationModule } from 'src/location/location.module';
+import { LoggerMiddleware } from 'src/middelewares/logger.middleware';
 
 
 @Module({
@@ -22,7 +24,8 @@ import { FileModule } from '../file/file.module';
     AdminModule,
     EmployeeModule,
     VersionManagerModule,
-    FileModule
+    FileModule,
+    LocationModule
   ],
   controllers: [AppController],
   providers: [
@@ -32,4 +35,8 @@ import { FileModule } from '../file/file.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}
