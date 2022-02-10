@@ -10,8 +10,9 @@ import { AdminModule } from '../admin/admin.module';
 import { EmployeeModule } from '../employee/employee.module';
 import { VersionManagerModule } from '../version-manager/version-manager.module';
 import { FileModule } from '../file/file.module';
-import { LocationModule } from 'src/location/location.module';
+import { LocationModule } from 'src/modules/location/location.module';
 import { LoggerMiddleware } from 'src/middelewares/logger.middleware';
+import { AttendanceModule } from 'src/modules/attendance/attendance.module';
 
 
 @Module({
@@ -25,7 +26,8 @@ import { LoggerMiddleware } from 'src/middelewares/logger.middleware';
     EmployeeModule,
     VersionManagerModule,
     FileModule,
-    LocationModule
+    LocationModule,
+    AttendanceModule
   ],
   controllers: [AppController],
   providers: [

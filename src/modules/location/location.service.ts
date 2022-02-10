@@ -32,12 +32,26 @@ export class LocationService {
     return location;
   }
 
-  update(id: number, updateLocationDto: UpdateLocationDto) {
-    return `This action updates a #${id} location`;
+  async update(id:number,updateLocationDto:UpdateLocationDto){
+
+  }
+
+  async findByIds(ids: number[]): Promise<Location[]> {
+    const res = await this.locationRepo
+      .createQueryBuilder('location')
+      .where('location.id IN (:...ids)', { ids: ids })
+      .getMany();
+    return res;
   }
 
  async remove(id: number) {
    const location = await this.findOne(id)
     return  this.locationRepo.remove(location)
+  }
+
+
+  async findByQRCode(qrCode: string): Promise<Location> {
+  const location  = await  this.locationRepo.findOne({where:{qrCode} });
+  return location
   }
 }
