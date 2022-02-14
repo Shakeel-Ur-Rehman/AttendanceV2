@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Employee } from "src/modules/employee/entities/employee.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("attendances")
 export class Attendance {
@@ -33,4 +34,7 @@ export class Attendance {
     @Column({default:false})
     is_night_shift:boolean
 
+
+    @ManyToOne(() => Employee, (employee) => employee.attendances)
+    public employee: Employee;
 }

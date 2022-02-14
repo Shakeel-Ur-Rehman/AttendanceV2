@@ -13,6 +13,7 @@ import { FileModule } from '../file/file.module';
 import { LocationModule } from 'src/modules/location/location.module';
 import { LoggerMiddleware } from 'src/middelewares/logger.middleware';
 import { AttendanceModule } from 'src/modules/attendance/attendance.module';
+import { GroupPolicyModule } from '../group-policy/group-policy.module';
 
 
 @Module({
@@ -27,7 +28,8 @@ import { AttendanceModule } from 'src/modules/attendance/attendance.module';
     VersionManagerModule,
     FileModule,
     LocationModule,
-    AttendanceModule
+    AttendanceModule,
+    GroupPolicyModule
   ],
   controllers: [AppController],
   providers: [
