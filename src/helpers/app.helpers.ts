@@ -1,3 +1,5 @@
+import { HttpException, HttpStatus } from "@nestjs/common";
+
 const moment = require('moment');
 const ZERO_DATE = '0001-01-01T09:00:00.000Z';
 const ObjectsToCsv = require('objects-to-csv');
@@ -59,5 +61,15 @@ export class AppHelpers{
         return new Promise((resolve) => {
           setTimeout(resolve, ms);
         });
+      }
+
+
+      static checkSecret(secret){
+        if (secret !== process.env.MANAGEMENT_SECRET) {
+          throw new HttpException(
+            `You're not allowed to create admin`,
+            HttpStatus.UNAUTHORIZED,
+          );
+        }
       }
 }

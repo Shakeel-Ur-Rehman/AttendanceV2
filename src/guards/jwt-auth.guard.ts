@@ -23,7 +23,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       throw (
         err ||
         new UnauthorizedException({
-          message: 'invalid email or password',
+          message: 'invalid or expired token',
         })
       );
     }
