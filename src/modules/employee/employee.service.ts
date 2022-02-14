@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRolesEnum } from 'src/enums/userRole.enum';
 import { UserStatusEnum } from 'src/enums/userStatus.enum';
+import { HttpHelperService } from 'src/helpers/http.helpers';
 import { Repository } from 'typeorm';
 import { UsersService } from '../users/users.service';
 import { Employee } from './entities/employee.entity';
@@ -11,7 +12,8 @@ export class EmployeeService {
   constructor(
     @InjectRepository(Employee)
     private readonly employeeRepo:Repository<Employee>,
-    private userService:UsersService
+    private userService:UsersService,
+    private httpService:HttpHelperService
   ){}
 
   create = async (data): Promise<Employee> => {
@@ -63,6 +65,16 @@ export class EmployeeService {
     .where('user.username like :username', { username:`${query.query}%`})
     .getMany();
   return employees
+  }
+
+
+
+  async update(id,data){
+    const employee  = await this.findOne(id)
+    Object.keys(data).forEach((key)=>{
+      employee[`${key}`] = data[`${key}`]
+    })
+    return this.employeeRepo.save(employee)
   }
 
 }

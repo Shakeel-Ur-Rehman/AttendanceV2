@@ -7,12 +7,16 @@ import {
 } from 'class-validator';
 import { AttendanceType } from 'src/enums/attendanceType.enum';
 import { UserStatusEnum } from 'src/enums/userStatus.enum';
+import { Attendance } from 'src/modules/attendance/entities/attendance.entity';
 import { File } from 'src/modules/file/entities/file.entity';
+import { GroupPolicy } from 'src/modules/group-policy/entities/group-policy.entity';
 import { User } from 'src/modules/users/entities/user.entity';
 import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -57,13 +61,24 @@ export class Employee {
   @JoinColumn()
   authUser: User;
 
-  @OneToOne(() => File, { lazy: true })
+  @OneToOne(() => File, { lazy: true,nullable:true })
   @JoinColumn()
   avatar: File;
 
+  @OneToMany(() => Attendance, (attendances) => attendances.employee, {
+    lazy: true,
+  })
+  attendances: Attendance[];
+
+  @ManyToOne(() => GroupPolicy, (group) => group.employees, {
+    eager: true,
+    onDelete: 'SET NULL',
+  })
+  public group: GroupPolicy;
 
 
-  static   createInitialDataObject = (empData: Object) => {
+
+  static  createInitialDataObject = (empData: Object) => {
     // #TODO: change the status enum 
     var initialData = {};
     if (Object.keys(empData).length > 0) {
