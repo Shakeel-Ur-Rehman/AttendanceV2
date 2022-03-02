@@ -14,6 +14,7 @@ import { LocationModule } from 'src/modules/location/location.module';
 import { LoggerMiddleware } from 'src/middelewares/logger.middleware';
 import { AttendanceModule } from 'src/modules/attendance/attendance.module';
 import { GroupPolicyModule } from '../group-policy/group-policy.module';
+import { RolesGuard } from 'src/guards/role.guard';
 
 
 @Module({
@@ -36,6 +37,10 @@ import { GroupPolicyModule } from '../group-policy/group-policy.module';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })
