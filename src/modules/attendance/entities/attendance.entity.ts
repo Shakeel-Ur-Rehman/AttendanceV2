@@ -1,40 +1,38 @@
-import { Employee } from "src/modules/employee/entities/employee.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Employee } from 'src/modules/employee/entities/employee.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("attendances")
+@Entity('attendances')
 export class Attendance {
-    @PrimaryGeneratedColumn()
-    id:number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    checkin_time:Date
+  @Column()
+  checkin_time: Date;
 
-    @Column({nullable:true})
-    checkout_time:Date
+  @Column({ nullable: true })
+  checkout_time: Date;
 
-    @Column()
-    is_archived:true
+  @Column()
+  is_archived: true;
 
-    @Column()
-    checkin_device_id:string
+  @Column()
+  checkin_device_id: string;
 
-    @Column()
-    checkin_type: string
+  @Column()
+  checkin_type: string;
 
-    @Column()
-    checkin_face: string
+  @Column()
+  checkin_face: string;
 
+  @Column()
+  checkin_id: string;
 
-    @Column()
-    checkin_id:string
+  @Column()
+  location_id: number;
 
-    @Column()
-    location_id:number
+  @Column({ default: false })
+  is_night_shift: boolean;
 
-    @Column({default:false})
-    is_night_shift:boolean
-
-
-    @ManyToOne(() => Employee, (employee) => employee.attendances)
-    public employee: Employee;
+  @ManyToOne(() => Employee, (employee) => employee.attendances)
+  public employee: Employee;
 }

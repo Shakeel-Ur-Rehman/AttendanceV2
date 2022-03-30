@@ -12,9 +12,8 @@ export class AppController {
   @NoAuth()
   @Get()
   getHello(@Res() res) {
-    res.redirect("/api")
+    res.redirect('/api');
   }
-
 
   @Get('current-time')
   currentTime(): string {

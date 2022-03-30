@@ -10,11 +10,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity("group_policies")
+@Entity('group_policies')
 export class GroupPolicy {
-    @PrimaryGeneratedColumn()
-    id:number
-
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ApiProperty()
   @Column()

@@ -1,7 +1,7 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import { IsNumber, IsOptional, ValidateNested } from "class-validator";
-import { CreateAdminUserDto } from "src/modules/users/dto/create-user.dto";
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsNumber, IsOptional, ValidateNested } from 'class-validator';
+import { CreateAdminUserDto } from 'src/modules/users/dto/create-user.dto';
 
 export class CreateAdminDto {
   @ApiProperty()

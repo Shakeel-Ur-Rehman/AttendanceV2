@@ -1,10 +1,5 @@
 import { ApiTags } from '@nestjs/swagger';
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { AttendanceType } from 'src/enums/attendanceType.enum';
 import { UserStatusEnum } from 'src/enums/userStatus.enum';
 import { Attendance } from 'src/modules/attendance/entities/attendance.entity';
@@ -21,8 +16,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@ApiTags("Employee")
-@Entity("employees")
+@ApiTags('Employee')
+@Entity('employees')
 export class Employee {
   @PrimaryGeneratedColumn()
   id: number;
@@ -61,7 +56,7 @@ export class Employee {
   @JoinColumn()
   authUser: User;
 
-  @OneToOne(() => File, { lazy: true,nullable:true })
+  @OneToOne(() => File, { lazy: true, nullable: true })
   @JoinColumn()
   avatar: File;
 
@@ -76,10 +71,8 @@ export class Employee {
   })
   public group: GroupPolicy;
 
-
-
-  static  createInitialDataObject = (empData: Object) => {
-    // #TODO: change the status enum 
+  static createInitialDataObject = (empData: Object) => {
+    // #TODO: change the status enum
     var initialData = {};
     if (Object.keys(empData).length > 0) {
       initialData = {
@@ -100,5 +93,4 @@ export class Employee {
     }
     return initialData;
   };
- 
 }

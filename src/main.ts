@@ -19,13 +19,10 @@ async function bootstrap() {
 }
 bootstrap();
 
-
-
-
 const config = new DocumentBuilder()
-.setTitle('Almana Attendance')
-.setDescription('The almana Attendance version')
-.setVersion('1.0')
-.addBearerAuth({ in: 'header', type: 'http' })
-.addTag('Attendance')
-.build();
+  .setTitle('Almana Attendance')
+  .setDescription('The almana Attendance version')
+  .setVersion('1.0')
+  .addBearerAuth({ in: 'header', type: 'http' })
+  .addTag('Attendance')
+  .build();

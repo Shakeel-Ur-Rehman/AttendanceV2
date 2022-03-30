@@ -11,8 +11,8 @@ import { HttpHelperService } from 'src/helpers/http.helpers';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([File,Employee,User]),HttpModule],
+  imports: [TypeOrmModule.forFeature([File, Employee, User]), HttpModule],
   controllers: [FileController],
-  providers: [FileService,EmployeeService,UsersService,HttpHelperService]
+  providers: [FileService, EmployeeService, UsersService, HttpHelperService],
 })
 export class FileModule {}

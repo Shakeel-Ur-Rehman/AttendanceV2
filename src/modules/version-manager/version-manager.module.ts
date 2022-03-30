@@ -5,8 +5,8 @@ import { VersionManageController } from './version-manager.controller';
 import { VersionManagerService } from './version-manager.service';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([VersionManager])],
+  imports: [TypeOrmModule.forFeature([VersionManager])],
   controllers: [VersionManageController],
-  providers: [VersionManagerService]
+  providers: [VersionManagerService],
 })
 export class VersionManagerModule {}

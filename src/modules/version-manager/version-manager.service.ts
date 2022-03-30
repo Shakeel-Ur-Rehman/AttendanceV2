@@ -10,7 +10,7 @@ export class VersionManagerService {
     private readonly versionManagerRepo: Repository<VersionManager>,
   ) {}
 
-  async create(data){
+  async create(data) {
     try {
       const versionManager = new VersionManager();
       versionManager.ios_version = data.iosVersion;
