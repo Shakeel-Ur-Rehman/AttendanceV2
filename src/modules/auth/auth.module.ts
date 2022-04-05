@@ -9,20 +9,28 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { VersionManager } from '../version-manager/entities/version-manager.entity';
 import { HttpHelperService } from 'src/helpers/http.helpers';
 import { HttpModule } from '@nestjs/axios';
-require("dotenv").config()
+import { AdminService } from '../admin/admin.service';
+import { Admin } from '../admin/entities/admin.entity';
+require('dotenv').config();
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([VersionManager]),
+    TypeOrmModule.forFeature([VersionManager, Admin]),
     UsersModule,
     HttpModule,
     JwtModule.register({
-    secret: process.env.JWT_SECRET,
-    signOptions: { expiresIn: '3600s' },
-  })
-   ],
-   controllers:[AuthController],
-  providers: [AuthService,JwtStrategy,VersionManagerService,HttpHelperService],
-  exports: [AuthService]
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '3600s' },
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    VersionManagerService,
+    HttpHelperService,
+    AdminService,
+  ],
+  exports: [AuthService],
 })
 export class AuthModule {}

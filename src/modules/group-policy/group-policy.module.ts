@@ -11,8 +11,16 @@ import { HttpHelperService } from 'src/helpers/http.helpers';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([GroupPolicy,Employee,User]),HttpModule],
+  imports: [
+    TypeOrmModule.forFeature([GroupPolicy, Employee, User]),
+    HttpModule,
+  ],
   controllers: [GroupPolicyController],
-  providers: [GroupPolicyService,EmployeeService,UsersService,HttpHelperService]
+  providers: [
+    GroupPolicyService,
+    EmployeeService,
+    UsersService,
+    HttpHelperService,
+  ],
 })
 export class GroupPolicyModule {}

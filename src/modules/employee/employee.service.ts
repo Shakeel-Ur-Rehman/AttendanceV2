@@ -11,10 +11,10 @@ import { Employee } from './entities/employee.entity';
 export class EmployeeService {
   constructor(
     @InjectRepository(Employee)
-    private readonly employeeRepo:Repository<Employee>,
-    private userService:UsersService,
-    private httpService:HttpHelperService
-  ){}
+    private readonly employeeRepo: Repository<Employee>,
+    private userService: UsersService,
+    private httpService: HttpHelperService,
+  ) {}
 
   create = async (data): Promise<Employee> => {
     data.authUser.type = UserRolesEnum.EMPLOYEE;
@@ -26,16 +26,17 @@ export class EmployeeService {
     return employee;
   };
 
-  findOne(id: number):Promise<Employee>{
-      return this.employeeRepo.findOne(id); 
+  findOne(id: number): Promise<Employee> {
+    return this.employeeRepo.findOne(id);
   }
 
-  async getEmployeeByBatchNo(batchNo){
-    const employee = await this.employeeRepo.createQueryBuilder("employee")
-                    .leftJoin("authUser","user")
-                    .where("user.username =:username",{username:batchNo})
-                    .getOne()
-    return employee
+  async getEmployeeByBatchNo(batchNo) {
+    const employee = await this.employeeRepo
+      .createQueryBuilder('employee')
+      .leftJoin('authUser', 'user')
+      .where('user.username =:username', { username: batchNo })
+      .getOne();
+    return employee;
   }
 
   async findMultipleById(data: number[]): Promise<Employee[]> {
@@ -45,36 +46,37 @@ export class EmployeeService {
       .getMany();
   }
 
-  async findByUserId(user_id):Promise<Employee>{
-    try{
-      const employee =  await this.employeeRepo.findOne({where:{
-        authUserId:user_id
-      }})
-      await employee.avatar
-      return employee
+  async findByUserId(user_id): Promise<Employee> {
+    try {
+      const employee = await this.employeeRepo.findOne({
+        where: {
+          authUserId: user_id,
+        },
+      });
+      await employee.avatar;
+      return employee;
+    } catch (error) {
+      throw new HttpException(
+        'Employee details not found',
+        HttpStatus.NOT_FOUND,
+      );
     }
-    catch(error){
-      throw new HttpException("Employee details not found",HttpStatus.NOT_FOUND)
-    }
-  }  
+  }
 
-  async searchEmployees(query){
+  async searchEmployees(query) {
     const employees = await this.employeeRepo
-    .createQueryBuilder('employee')
-    .leftJoinAndSelect('employee.authUser', 'user')
-    .where('user.username like :username', { username:`${query.query}%`})
-    .getMany();
-  return employees
+      .createQueryBuilder('employee')
+      .leftJoinAndSelect('employee.authUser', 'user')
+      .where('user.username like :username', { username: `${query.query}%` })
+      .getMany();
+    return employees;
   }
 
-
-
-  async update(id,data){
-    const employee  = await this.findOne(id)
-    Object.keys(data).forEach((key)=>{
-      employee[`${key}`] = data[`${key}`]
-    })
-    return this.employeeRepo.save(employee)
+  async update(id, data) {
+    const employee = await this.findOne(id);
+    Object.keys(data).forEach((key) => {
+      employee[`${key}`] = data[`${key}`];
+    });
+    return this.employeeRepo.save(employee);
   }
-
 }

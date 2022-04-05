@@ -9,19 +9,17 @@ import { Location } from './entities/location.entity';
 export class LocationService {
   constructor(
     @InjectRepository(Location)
-    private readonly locationRepo:Repository<Location>
-  ){
-    
-  }
+    private readonly locationRepo: Repository<Location>,
+  ) {}
   create(createLocationDto: CreateLocationDto) {
-    return this.locationRepo.save(createLocationDto)
+    return this.locationRepo.save(createLocationDto);
   }
 
   findAll() {
     return this.locationRepo.find();
   }
 
-  async findOne(id: number):Promise<Location> {
+  async findOne(id: number): Promise<Location> {
     const location = await this.locationRepo.findOne({ id });
     if (!location) {
       throw new HttpException(
@@ -32,9 +30,7 @@ export class LocationService {
     return location;
   }
 
-  async update(id:number,updateLocationDto:UpdateLocationDto){
-
-  }
+  async update(id: number, updateLocationDto: UpdateLocationDto) {}
 
   async findByIds(ids: number[]): Promise<Location[]> {
     const res = await this.locationRepo
@@ -44,14 +40,13 @@ export class LocationService {
     return res;
   }
 
- async remove(id: number) {
-   const location = await this.findOne(id)
-    return  this.locationRepo.remove(location)
+  async remove(id: number) {
+    const location = await this.findOne(id);
+    return this.locationRepo.remove(location);
   }
 
-
   async findByQRCode(qrCode: string): Promise<Location> {
-  const location  = await  this.locationRepo.findOne({where:{qrCode} });
-  return location
+    const location = await this.locationRepo.findOne({ where: { qrCode } });
+    return location;
   }
 }

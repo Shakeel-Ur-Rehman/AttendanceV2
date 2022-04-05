@@ -10,14 +10,14 @@ import { GroupPolicy } from './entities/group-policy.entity';
 export class GroupPolicyService {
   constructor(
     @InjectRepository(GroupPolicy)
-    private readonly groupPolicyRepo:Repository<GroupPolicy>,
-    private readonly employeeService:EmployeeService
-  ){}
-  async create(data: CreateGroupPolicyDto,req) {
+    private readonly groupPolicyRepo: Repository<GroupPolicy>,
+    private readonly employeeService: EmployeeService,
+  ) {}
+  async create(data: CreateGroupPolicyDto, req) {
     const policy = new GroupPolicy();
-    Object.keys(data).forEach((key)=>{
-      policy[`${key}`] = data[`${key}`]
-    })
+    Object.keys(data).forEach((key) => {
+      policy[`${key}`] = data[`${key}`];
+    });
     policy.owner = req.user;
     if (data.employees && data.employees.length > 0) {
       const employees = await this.employeeService.findMultipleById(
@@ -66,9 +66,9 @@ export class GroupPolicyService {
 
   async update(id: number, data: UpdateGroupPolicyDto) {
     const policy = await this.findOne(id);
-    Object.keys(data).forEach((key)=>{
-      policy[`${key}`] = data[`${key}`]
-    })
+    Object.keys(data).forEach((key) => {
+      policy[`${key}`] = data[`${key}`];
+    });
     if (
       (data.employees && data.employees.length > 0) ||
       policy.employees.length > 0
@@ -90,12 +90,11 @@ export class GroupPolicyService {
   }
 
   async remove(id: number) {
-    try{
-      const policy = await this.findOne(id)
-      return await this.groupPolicyRepo.delete(policy)
-    }
-    catch(error){
-      throw new HttpException(error.message,HttpStatus.BAD_REQUEST)
+    try {
+      const policy = await this.findOne(id);
+      return await this.groupPolicyRepo.delete(policy);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 }

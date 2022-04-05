@@ -3,8 +3,10 @@ import { Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { Admin } from 'src/modules/admin/entities/admin.entity';
+import { Attendance } from 'src/modules/attendance/entities/attendance.entity';
 import { Employee } from 'src/modules/employee/entities/employee.entity';
 import { File } from 'src/modules/file/entities/file.entity';
+import { GroupPolicy } from 'src/modules/group-policy/entities/group-policy.entity';
 import { User } from 'src/modules/users/entities/user.entity';
 import { SeederService } from './seeder.service';
 dotenv.config();
@@ -22,11 +24,9 @@ dotenv.config();
       synchronize: true,
     }),
     HttpModule,
-    TypeOrmModule.forFeature([Employee,Admin,User,File]),
+    TypeOrmModule.forFeature([Employee, Admin, User, File, Attendance,GroupPolicy]),
   ],
 
-  providers: [
-    SeederService
-  ],
+  providers: [SeederService],
 })
 export class SeederModule {}

@@ -9,8 +9,8 @@ import { HttpHelperService } from 'src/helpers/http.helpers';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Attendance,Location]),HttpModule],
+  imports: [TypeOrmModule.forFeature([Attendance, Location]), HttpModule],
   controllers: [AttendanceController],
-  providers: [AttendanceService,LocationService,HttpHelperService]
+  providers: [AttendanceService, LocationService, HttpHelperService],
 })
 export class AttendanceModule {}

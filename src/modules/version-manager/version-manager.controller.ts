@@ -1,19 +1,13 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpException,
   HttpStatus,
-  Param,
-  ParseIntPipe,
-  Patch,
   Post,
   Request,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
-import { DeleteResult, getRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -41,9 +35,8 @@ export class VersionManageController {
   @ApiResponse({ type: VersionManager, status: 201 })
   @Post()
   public async create(@Body() data: createVersionManagerDto) {
-      return this.versionManagerService.create(data)
+    return this.versionManagerService.create(data);
   }
-
 
   @NoAuth()
   @ApiOperation({ summary: 'Get Active Version of Apps' })

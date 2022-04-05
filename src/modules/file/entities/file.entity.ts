@@ -1,35 +1,35 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString } from "class-validator";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity("files")
+@Entity('files')
 export class File {
-    @PrimaryGeneratedColumn()
-    id:number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ApiProperty({
-        required: true,
-        example: 'url',
-        description: 'This is the url of file',
-      })
-      @Column()
-      @IsString()
-      @IsNotEmpty()
-      public url: string;
-    
-      @ApiProperty({
-        required: true,
-        example: 'key',
-        description: 'This is the key of file',
-      })
-      @Column()
-      public key: string;
-    
-      @ApiProperty({
-        required: true,
-        example: 'name',
-        description: 'This is the name of file',
-      })
-      @Column()
-      public name: string;
+  @ApiProperty({
+    required: true,
+    example: 'url',
+    description: 'This is the url of file',
+  })
+  @Column()
+  @IsString()
+  @IsNotEmpty()
+  public url: string;
+
+  @ApiProperty({
+    required: true,
+    example: 'key',
+    description: 'This is the key of file',
+  })
+  @Column()
+  public key: string;
+
+  @ApiProperty({
+    required: true,
+    example: 'name',
+    description: 'This is the name of file',
+  })
+  @Column()
+  public name: string;
 }

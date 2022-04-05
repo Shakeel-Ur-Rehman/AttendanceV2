@@ -7,8 +7,8 @@ import { UsersService } from '../users/users.service';
 import { User } from '../users/entities/user.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Admin,User])],
+  imports: [TypeOrmModule.forFeature([Admin, User])],
   controllers: [AdminController],
-  providers: [AdminService,UsersService]
+  providers: [AdminService, UsersService],
 })
 export class AdminModule {}

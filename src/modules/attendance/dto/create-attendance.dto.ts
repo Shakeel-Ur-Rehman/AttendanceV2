@@ -1,10 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 export class CreateAttendanceDto {
   @IsNotEmpty()
   locationId: number;
@@ -82,7 +77,7 @@ export class CheckoutDto {
 }
 
 export class CreateAttendanceWithQRCodeDto {
- @ApiProperty()
+  @ApiProperty()
   @IsNotEmpty()
   locationId: number[] | number;
 
